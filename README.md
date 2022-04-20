@@ -16,7 +16,7 @@ Convert USD to BRL the easy way.
 
   2. Move the file `tobrl` to a folder inside `$PAtH`.
 
-  3. Get your API key and paste it to the `.env` file.
+  3. Get your API key and paste it to the `.env` file. Rename `.env.sample` to `.env`
 
 After that you can call the program followed by a value. 
 
