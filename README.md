@@ -19,4 +19,4 @@ Convert USD to BRL the easy way.
 After that you can call the program followed by a value. 
 
 ### Example:  
-`$ tobrl 10` to convert R$10 to USD.
+`$ tobrl 10` to convert US$1 to BRL
