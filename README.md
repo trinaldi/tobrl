@@ -5,9 +5,7 @@ Convert USD to BRL the easy way.
 ## Requisites
 
   + Ruby
-
   + [`dotenv`](https://github.com/bkeepers/dotenv) gem
-
   + [OpenExchangeRate](https://openexchangerates.org/) API Key
 
 ## Usage
