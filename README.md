@@ -18,5 +18,7 @@ Convert USD to BRL the easy way.
 
   3. Get your API key and paste it to the `.env` file.
 
-After that you can call the program followed by a value. Example:  
+After that you can call the program followed by a value. 
+
+Example:  
 `$ tobrl 10` to convert R$10 to USD.
