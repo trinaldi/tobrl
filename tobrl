@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+require 'dotenv/load'
+require 'json'
+require 'net/http'
+
+api_key = ENV['API_KEY']
+uri = URI("https://openexchangerates.org/api/latest.json?app_id=#{api_key}")
+
+if ARGV.empty? || ARGV[0].to_f == 0.0
+  puts "Uso: Adicione um valor.\nExemplo: `tobrl 12` para converter R$12 para USD"
+else
+  rates = JSON.parse(Net::HTTP.get(uri))
+  brl = rates["rates"]["BRL"].to_f * ARGV[0].to_f
+
+  puts brl.round(2)
+end
