@@ -10,14 +10,14 @@ Convert USD to BRL the easy way.
 
 ## Usage
 
-  1. Clone this project.
+  1. Get your API key and paste it to the `.env` file. Rename `.env.sample` to `.env`
 
-  2. Move the file `tobrl` to a folder inside `$PAtH`.
+  2. Clone this project.
 
-  3. Get your API key and paste it to the `.env` file. Rename `.env.sample` to `.env`
+  3. Move the file `tobrl` to a folder inside `$PATH`. You can also set an alias in your `.bashrc`/`.zshrc` file.
 
-After that you can call the program followed by a value. 
+  4. Set the file as executable: `chmod u+x ./tobrl`.
 
-### Example:  
+### Example
 
-`$ tobrl 10` to convert US$10 to BRL
+`$ tobrl 10` to convert $10 to BRL.
