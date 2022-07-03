@@ -43,6 +43,7 @@ class ToBRL
   def usage
     return puts 'Crie sua API key em https://openexchangerates.org/' if @api_key.nil?
     return puts "Uso: Adicione um valor.\nExemplo: `tobrl 12` para converter R$12 para USD" if @value.zero?
+    true
   end
 
   def build_uri
