@@ -6,30 +6,43 @@ require 'net/http'
 
 class ToBRL
   def init
-    check_deps
-    value = build_uri
-    convert(value)
+    check_api
+    check_value
+    return if usage.nil?
+
+    brl = build_uri
+    convert(brl, value)
   end
 
   private
 
-  def check_deps
+  def check_api
     api_key
-    value
   end
 
   def load_api_key
-    Dotenv.load(File.join(__dir__, ".env"))['API_KEY']
+    Dotenv.load(File.join(__dir__, '.env'))['API_KEY']
   end
 
   def api_key
     @api_key = load_api_key
-    puts 'Crie sua API key em https://openexchangerates.org/' if @api_key.nil?
+  end
+
+  def check_value
+    value
   end
 
   def value
-    @value = ARGV[0].to_f
-    puts "Uso: Adicione um valor.\nExemplo: `tobrl 12` para converter R$12 para USD" if @value.zero?
+    @value = load_value
+  end
+
+  def load_value
+    ARGV[0].to_f
+  end
+
+  def usage
+    return puts 'Crie sua API key em https://openexchangerates.org/' if @api_key.nil?
+    return puts "Uso: Adicione um valor.\nExemplo: `tobrl 12` para converter R$12 para USD" if @value.zero?
   end
 
   def build_uri
@@ -46,9 +59,9 @@ class ToBRL
     JSON.parse(result)
   end
 
-  def convert(json)
+  def convert(json, value)
     rates = json
-    brl = rates["rates"]["BRL"].to_f * @value
+    brl = rates['rates']['BRL'].to_f * value
     print_value(brl)
   end
 
