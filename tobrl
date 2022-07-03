@@ -4,21 +4,57 @@ require 'dotenv'
 require 'json'
 require 'net/http'
 
-api_key = Dotenv.load(File.join(__dir__, ".env"))['API_KEY']
+class ToBRL
+  def init
+    check_deps
+    value = build_uri
+    convert(value)
+  end
 
-if api_key.nil? || api_key.empty?
-  puts "Crie sua API key em https://openexchangerates.org/"
-  return
+  private
+
+  def check_deps
+    api_key
+    value
+  end
+
+  def load_api_key
+    Dotenv.load(File.join(__dir__, ".env"))['API_KEY']
+  end
+
+  def api_key
+    @api_key = load_api_key
+    puts 'Crie sua API key em https://openexchangerates.org/' if @api_key.nil?
+  end
+
+  def value
+    @value = ARGV[0].to_f
+    puts "Uso: Adicione um valor.\nExemplo: `tobrl 12` para converter R$12 para USD" if @value.zero?
+  end
+
+  def build_uri
+    uri = URI("https://openexchangerates.org/api/latest.json?app_id=#{@api_key}")
+    fetch_uri(uri)
+  end
+
+  def fetch_uri(uri)
+    result = Net::HTTP.get(uri)
+    parse_result(result)
+  end
+
+  def parse_result(result)
+    JSON.parse(result)
+  end
+
+  def convert(json)
+    rates = json
+    brl = rates["rates"]["BRL"].to_f * @value
+    print_value(brl)
+  end
+
+  def print_value(brl)
+    puts brl.truncate(2)
+  end
 end
 
-if ARGV.empty? || ARGV[0].to_f == 0.0
-  puts "Uso: Adicione um valor."
-  puts "Exemplo: `tobrl 12` para converter R$12 para USD"
-else
-  uri = URI("https://openexchangerates.org/api/latest.json?app_id=#{api_key}")
-  rates = JSON.parse(Net::HTTP.get(uri))
-  brl = rates["rates"]["BRL"].to_f * ARGV[0].to_f
-
-  puts brl.truncate(2)
-
-end
+ToBRL.new.init
